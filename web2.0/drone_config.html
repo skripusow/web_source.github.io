@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Конфигуратор БПЛА</title>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer"></script>
+    <style>
+        body {
+            background-color: #121212;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+        }
+        .menu {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 10px;
+            font-size: 18px;
+        }
+        .menu a {
+            color: white;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .menu a:hover {
+            text-shadow: 0px 0px 10px cyan;
+        }
+        model-viewer {
+            width: 100%;
+            max-width: none;
+            height: 500px;
+            margin: 20px auto;
+            display: block;
+        }
+        .configurator {
+            margin-top: 20px;
+        }
+        .option-button {
+            background-color: #0072ff;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .option-button:hover {
+            background-color: #0056cc;
+        }
+        .info-box {
+            position: absolute;
+            left: -300px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 250px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 5px;
+            transition: left 0.5s ease-in-out;
+            text-align: left;
+        }
+        .info-box.active {
+            left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">Конфигуратор БПЛА</div>
+    
+    <div class="menu">
+        <a href="index.html">Главная</a>
+        <a href="courses.html">Программа Курса</a>
+        <a href="#">Симулятор</a>
+        <a href="#">Комьюнити</a>
+        <a href="#">Контакты</a>
+    </div>
+
+    
+    <model-viewer id="droneModel" src="models/drone_fb.glb" alt="3D модель БПЛА" auto-rotate camera-controls ar shadow-intensity="1" environment-image="neutral" onerror="console.error('Ошибка загрузки 3D модели!');">
+    </model-viewer>
+
+    <div class="configurator">
+        <h2>Выберите компонент</h2>
+        <p id="componentDescription">Нажмите на кнопку, чтобы выбрать компонент.</p>
+        
+        <!-- Кнопки для разборки дрона -->
+        <button class="option-button" onclick="toggleComponentView('full_drone', 'models/drone_fb.glb', '0m 0m 0m')">Дрон в сборке</button>
+        <button class="option-button" onclick="toggleComponentView('frame', 'models/main_body.glb', '0m 50m 0m')">Корпус</button>
+        <button class="option-button" onclick="toggleComponentView('motor', 'models/motor02.glb', '0m 0m 0m')">Электродвигатель</button>
+        <button class="option-button" onclick="toggleComponentView('propeller', 'models/propeller_01.glb', '0m 0m 0m')">Пропеллер</button>
+        <button class="option-button" onclick="toggleComponentView('battery', 'models/battery.glb', '0m 0m 0m')">Батарея</button>
+        <button class="option-button" onclick="toggleComponentView('base_bottom', 'models/base_bottom.glb', '0m 20m m')">Крепление камеры</button>
+        <button class="option-button" onclick="toggleComponentView('camera', 'models/camera.glb', '0m 20m m')">Камера</button>
+        <button class="option-button" onclick="toggleComponentView('microcomputer', 'models/microcomputer01.glb', '0m 30m m')">Плата управления</button>
+        <button class="option-button" onclick="toggleComponentView('srabilizer', 'models/stabilizer_01.glb', '-1m 20m m')">Стабилизатор</button>
+    </div>
+
+    <div class="info-box" id="infoBox">
+        <p id="infoText">Выберите компонент для просмотра характеристик.</p>
+    </div>
+
+    <script>
+        let activeComponent = null;
+        let isZoomed = false;
+        let originalCameraPosition = "0m 0m 2m"; 
+        let originalCameraTarget = "0m 0m 0m"; 
+
+        
+        function toggleComponentView(component, modelSrc, cameraTarget) {
+            let modelViewer = document.getElementById("droneModel");
+            let infoBox = document.getElementById("infoBox");
+            let infoText = document.getElementById("infoText");
+
+            if (activeComponent === component && isZoomed) {
+                
+                modelViewer.setAttribute('camera-target', originalCameraTarget);
+                modelViewer.setAttribute('camera-orbit', originalCameraPosition);
+                modelViewer.setAttribute('src', 'models/drone_fb.glb'); 
+                infoBox.classList.remove("active");
+                isZoomed = false;
+            } else {
+                
+                modelViewer.setAttribute('camera-target', cameraTarget);
+                modelViewer.setAttribute('camera-orbit', "0.5m 90deg 45deg");
+
+                modelViewer.setAttribute('src', modelSrc); 
+
+                infoBox.classList.add("active");
+                switch (component) {
+                    case 'full_drone':
+                        infoText.innerText = "DJI Phantom 3 Professional — это один из самых популярных дронов, разработанных компанией DJI, предназначенный для профессиональной аэрофотосъемки и видеосъемки. Он сочетает в себе передовые технологии, мощные летные характеристики и простоту управления, что делает его идеальным как для профессионалов, так и для любителей. Дрон оснащен высококачественной 4K-камерой, системой спутникового позиционирования GPS/GLONASS, интеллектуальными режимами полета и мощными электродвигателями, обеспечивающими стабильность в воздухе даже при сложных условиях."
+                        break;
+                    case 'frame':
+                        infoText.innerText = "Материал: Прочный пластик с высокой устойчивостью к повреждениям \n Размеры: 590 × 590 × 350 мм (с пропеллерами) \n Вес: 1280 г (включая аккумулятор) \n Дизайн: Аэродинамическая форма для стабильного полета \n Подсветка: Светодиодные индикаторы на лучах для ориентации в темноте.";
+                        break;
+                    case 'motor':
+                        infoText.innerText = "Тип: Бесколлекторный двигатель постоянного тока \n Мощность: Оптимизирован для высокой эффективности и длительной работы \n Максимальная скорость вращения: 8000-9000 об/мин \n Особенности: Высокая мощность при низком энергопотреблении Улучшенное охлаждение для предотвращения перегрева \n Оптимизирован для работы с интеллектуальной системой управления скоростью.";
+                        break;
+                    case 'propeller':
+                        infoText.innerText = "Материал: Ударопрочный пластик Размер: 9 дюймов (23 см) \n Конструкция: Двухлопастные пропеллеры с автоматической балансировкой \n Особенности: Легкая замена благодаря быстросъемному креплению \n Оптимизированная аэродинамика для плавного и стабильного полета \n Высокая устойчивость к деформации при больших нагрузках.";
+                        break;
+                    case 'battery':
+                        infoText.innerText = "Тип: Литий-полимерная (LiPo) 4S \n Емкость: 4480 мАч Напряжение: 15.2 В \n Время работы: До 23 минут полета \n Особенности: \n Встроенная интеллектуальная система управления зарядом \n Автоматическое отключение при критическом разряде \n Балансировка ячеек для продления срока службы.";
+                        break;
+                    case 'base_bottom':
+                        infoText.innerText = "Материал: Алюминиевый сплав высокой прочности \n Тип подвеса: 3-осевой моторизованный подвес \n Особенности: \n Минимизация вибраций и устранение тряски \n Плавное движение камеры даже при резких маневрах \n Поддержка функции стабилизации изображения.";
+                        break;
+                    case 'camera':
+                        infoText.innerText = "Разрешение фото: 12 Мп \n Разрешение видео: 4K (4096×2160 пикселей) при 30 кадрах в секунду \n Объектив: f/2.8 с углом обзора 94° \n Формат записи: MP4/MOV (H.264) \n Особенности: \n Уменьшенный эффект (рыбьего глаза) \n Поддержка режима съемки в RAW для профессиональной обработки \n Высокая детализация изображения даже при слабом освещении"
+                        break;
+                    case 'microcomputer':
+                        infoText.innerText = "Процессор: \n Высокоскоростной 32-битный контроллер \n Функции: \n Управление полетом и стабилизацией \n Автоматическая коррекция курса при сильном ветре \n Обмен данными с мобильными устройствами через приложение DJI GO \n Дополнительно: \n Поддержка полетных режимов: GPS, ATTI, Course Lock, Home Lock \n Интеллектуальные алгоритмы предотвращения сбоев"
+                        break;
+                    case 'stabilizer_01':
+                        infoText.innerText = "Тип: 3-осевой моторизованный подвес \n Диапазон вращения: \n Наклон: от -90° до +30° \n Поворот: от -30° до +30° \n Отклонение: от -30° до +30° \n Особенности: \n Устранение вибраций при съемке \n Плавное перемещение камеры в любых условиях \n Интеллектуальная система самокоррекции положения"
+                        break; 
+
+                }
+
+                activeComponent = component;
+                isZoomed = true;
+            }
+        }
+    </script>
+</body>
+</html>

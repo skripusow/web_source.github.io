@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Программа Курса - Обучение БПЛА</title>
+    <style>
+        body {
+            background-image: url('image.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            box-shadow: 0 4px 10px rgba(0, 255, 255, 0.5);
+            position: relative;
+            z-index: 10;
+        }
+        .menu {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 10px;
+            font-size: 18px;
+        }
+        .menu a {
+            color: white;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .menu a:hover {
+            text-shadow: 0px 0px 10px cyan;
+        }
+        .filters {
+            margin: 20px;
+        }
+        .courses {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            flex-grow: 1;
+            padding-bottom: 20px;
+        }
+        .course-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 300px;
+            transition: transform 0.3s;
+        }
+        .course-card:hover {
+            transform: scale(1.05);
+        }
+        footer {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 10px 0;
+            text-align: center;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">Программа Курса</div>
+    <div class="menu">
+        <a href="index.html">Главная</a>
+        <a href="courses.html">Программа Курса</a>
+        <a href="#">Симулятор</a>
+        <a href="#">Комьюнити</a>
+        <a href="#">Контакты</a>
+    </div>
+    <div class="filters">
+        <label for="search">Поиск:</label>
+        <input type="text" id="search" placeholder="Введите ключевые слова">
+    </div>
+    <div class="courses">
+        <div class="course-card">
+            <h3><a href='drone_config.html' style='color: white; text-decoration: none;'>Глава 1. КАК УСТРОЕН ДРОН</a></h3>
+            <p>Строение дрона, основные компоненты, управление.</p>
+        </div>
+        <div class="course-card">
+            <h3><a href='chapter_2.html' style='color: white; text-decoration: none;'>Глава 2. ПРОСТЕЙШЕЕ ПРОГРАММИРОВАНИЕ БПЛА</a></h3>
+            <p>Основы написания кода для дронов, примеры команд.</p>
+        </div>
+        <div class="course-card">
+            <h3><a href='drone_computation.html' style='color: white; text-decoration: none;'>Глава 3. ВЗАИМОДЕЙСТВИЕ КОПТЕРА И ВЫЧИСЛИТЕЛЬНОГО МОДУЛЯ</a></h3>
+            <p>Работа с микроконтроллерами и передача данных.</p>
+        </div>
+        <div class="course-card">
+            <h3><a href='drone_vision.html' style='color: white; text-decoration: none;'>Глава 4. СИСТЕМЫ ТЕХНИЧЕСКОГО ЗРЕНИЯ</a></h3>
+            <p>Компьютерное зрение, обработка изображений, датчики.</p>
+        </div>
+        <div class="course-card">
+            <h3><a href='drone_control.html' style='color: white; text-decoration: none;'>Глава 5. ТИПЫ УПРАВЛЕНИЯ</a></h3>
+            <p>Ручное, автоматическое, полуавтономное управление.</p>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2025 Обучение БПЛА | Все права защищены</p>
+    </footer>
+</body>
+</html>

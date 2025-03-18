@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Простейшее программирование БПЛА</title>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer"></script>
+    <style>
+        body {
+            background-color: #121212;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+        }
+        .content {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            text-align: left;
+        }
+        pre {
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .quiz {
+            background: #222;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .button {
+            background-color: #0072ff;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #0056cc;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">Глава 2. Простейшее программирование БПЛА</div>
+    <div class="content">
+        <h2>🚀 Введение</h2>
+        <p>Программирование дронов позволяет управлять их движением, сенсорами и выполнять сложные автономные задачи.</p>
+        
+        <h2>1️⃣ Основные принципы</h2>
+        <p>Программируемые дроны имеют три ключевых компонента:</p>
+        <ul>
+            <li><strong>Бортовой компьютер</strong> – выполняет код и управляет движением.</li>
+            <li><strong>Контроллер полета</strong> – следит за стабильностью.</li>
+            <li><strong>Коммуникационный модуль</strong> – передает команды.</li>
+        </ul>
+
+        <h2>2️⃣ Установка библиотек</h2>
+        <pre>pip install djitellopy</pre>
+
+        <h2>3️⃣ Основные команды</h2>
+        <p>Пример кода для взлета дрона:</p>
+        <pre>
+from djitellopy import Tello
+
+drone = Tello()
+drone.connect()
+drone.takeoff()
+drone.land()
+        </pre>
+        
+        <h2>4️⃣ Интерактивное задание</h2>
+        <div class="quiz">
+            <p>Допиши недостающую команду, чтобы дрон повернул на 90 градусов:</p>
+            <pre>
+from djitellopy import Tello
+
+drone = Tello()
+drone.connect()
+drone.takeoff()
+_____ (90)  # Вставь команду здесь
+            </pre>
+            <input type="text" id="answer" placeholder="Введите команду">
+            <button class="button" onclick="checkAnswer()">Проверить</button>
+            <p id="result"></p>
+        </div>
+    </div>
+
+    <script>
+        function checkAnswer() {
+            let answer = document.getElementById("answer").value.trim();
+            let result = document.getElementById("result");
+            if (answer === "drone.rotate_clockwise") {
+                result.innerHTML = "✅ Верно! Дрон развернется на 90 градусов.";
+                result.style.color = "#00ff00";
+            } else {
+                result.innerHTML = "❌ Неправильно! Попробуйте снова.";
+                result.style.color = "#ff0000";
+            }
+        }
+    </script>
+</body>
+</html>
